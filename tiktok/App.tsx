@@ -1,11 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native'
+// Added import statement for React
+import React from 'react';
+import FeedScreen from './components/feed';
+
+// Removed unnecessary import statement for React
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={{flex:1}}>
+      <FeedScreen />
     </View>
   );
 }
