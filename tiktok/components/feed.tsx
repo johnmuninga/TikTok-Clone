@@ -19,7 +19,6 @@ export default function FeedScreen() {
     const video = useRef<Video>(null)
     const isPlaying = status.isLoaded && status.isPlaying;
     const onPress = ()  => {
-        console.warn('Post Liked');
         if(!video.current){
             return;
         }
@@ -46,6 +45,12 @@ export default function FeedScreen() {
             <LinearGradient colors={['transparent', 'rgba(0,0,0,0.6)']}
             style={[StyleSheet.absoluteFillObject, styles.overlay]}
             />
+            {!isPlaying &&<Ionicons 
+            style={{position: 'absolute', top: '50%', left: '50%', marginLeft: -35, marginTop: -35}}
+             name="play" 
+             size={70} 
+             color="rgba(255,255,255,0.6)" 
+             />}
             <SafeAreaView style={{flex:1}}>
                 <View style={styles.footer}>
                     <View style={styles.leftColumn}>
