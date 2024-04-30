@@ -1,5 +1,5 @@
 import { View, Text, StatusBar, SafeAreaView, StyleSheet, Pressable, FlatList } from 'react-native'
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -39,6 +39,11 @@ const posts =[
 
 export default function FeedScreen() {
     const [activePostId, setActivePostId] = useState(posts[0].id)
+    const onViewableItemsChanged = useCallback(({changed, viewableItems}) => {
+        if(viewableItems.length > 0 && viewableItems[0].isViewable){
+            setActivePostId(viewableItems[0].item.id)
+        }
+    }, [])
    
   return (
     <View style={styles.container}>
@@ -47,7 +52,13 @@ export default function FeedScreen() {
             data={posts}
             renderItem={({item}) => <VideoPost post={item} activePostId={activePostId} />}
             pagingEnabled
+            showsVerticalScrollIndicator={false}
+            viewabilityConfig={{
+                itemVisiblePercentThreshold: 50
+            }}
+            onViewableItemsChanged={onViewableItemsChanged}
         />
+
     </View>
   )
 }
