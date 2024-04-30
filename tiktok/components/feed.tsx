@@ -1,101 +1,62 @@
-import { View, Text, StatusBar, SafeAreaView, StyleSheet, Pressable } from 'react-native'
+import { View, Text, StatusBar, SafeAreaView, StyleSheet, Pressable, FlatList } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import VideoPost from './VideoPost';
 
 
 
 
-const post ={
-    id: '1',
-    video: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/vertical-videos/2.mp4',
-    caption: 'Check out this video',
+const posts =[
+    {
+        id: '1',
+        video: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/vertical-videos/1.mp4',
+        caption: 'Hey There',
+    },
+    {
+        id: '2',
+        video: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/vertical-videos/2.mp4',
+        caption: 'Check out this video',
+    },
+    {
+        id: '3',
+        video: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/vertical-videos/3.mp4',
+        caption: 'We are committed',
+    },
+    {
+    id: '4',
+    video: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/vertical-videos/4.mp4',
+    caption: 'Piano Practice',
+},
+{
+    id: '5',
+    video: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/vertical-videos/5.mp4',
+    caption: 'Hello World',
 }
+]
 
 export default function FeedScreen() {
-    const [status, setStatus] = useState<AVPlaybackStatus>({} as any)
-    const video = useRef<Video>(null)
-    const isPlaying = status.isLoaded && status.isPlaying;
-    const onPress = ()  => {
-        if(!video.current){
-            return;
-        }
-        if(isPlaying){
-            video.current.pauseAsync();
-        }
-        else{
-            video.current.playAsync();
-        }
-        
-    }
+    const [activePostId, setActivePostId] = useState(posts[0].id)
+   
   return (
     <View style={styles.container}>
         <StatusBar barStyle={'light-content'}  />
-        <Video
-            ref={video}
-            source={{ uri: post.video }}
-            style={[StyleSheet.absoluteFillObject, styles.video]}
-            resizeMode={ResizeMode.COVER}
-            isLooping
-            onPlaybackStatusUpdate={status => setStatus(() => status)}
+        <FlatList
+            data={posts}
+            renderItem={({item}) => <VideoPost post={item} activePostId={activePostId} />}
+            pagingEnabled
         />
-        <Pressable onPress={onPress} style={styles.content}>
-            <LinearGradient colors={['transparent', 'rgba(0,0,0,0.6)']}
-            style={[StyleSheet.absoluteFillObject, styles.overlay]}
-            />
-            {!isPlaying &&<Ionicons 
-            style={{position: 'absolute', top: '50%', left: '50%', marginLeft: -35, marginTop: -35}}
-             name="play" 
-             size={70} 
-             color="rgba(255,255,255,0.6)" 
-             />}
-            <SafeAreaView style={{flex:1}}>
-                <View style={styles.footer}>
-                    <View style={styles.leftColumn}>
-                        <Text style={styles.caption}>{post.caption}</Text>
-                    </View>
-                    <View style={styles.rightColumn}>
-                        <Ionicons name="heart" size={35} color="white" />
-                        <Ionicons name="share-social-sharp" size={35} color="white" />
-                        <FontAwesome name="commenting" size={35} color="white" />
-                        <Ionicons name="bookmark" size={35} color="white" />
-                    </View>
-                </View>
-            </SafeAreaView>
-        </Pressable>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-    container : {flex : 1},
-    video: {
-        
+    container : {
+        flex : 1,
+        backgroundColor: 'black',
     },
-    content: {
-        flex: 1,
-        padding: 10
-    },
-    footer:{
-       marginTop: 'auto', 
-       flexDirection: 'row',
-       alignItems: 'flex-end',
-    },
-    caption: {
-        color: 'white',
-        fontSize: 16,
-        fontFamily: 'Avenir'
-        
-    },
-    overlay: {
-        top: '50%'
-    },
-    leftColumn: {
-        flex: 1
-    },
-    rightColumn: {
-        gap: 10,
-    }
+
+    
 })
