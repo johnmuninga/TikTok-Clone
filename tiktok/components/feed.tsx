@@ -10,23 +10,24 @@ const post ={
 }
 
 export default function FeedScreen() {
+    
   return (
     <View style={styles.container}>
-        <StatusBar style='auto' />
+        <StatusBar barStyle={'light-content'}  />
         <Video
             source={{ uri: post.video }}
             style={[StyleSheet.absoluteFillObject, styles.video]}
             resizeMode={ResizeMode.COVER}
         />
-        <SafeAreaView>
-            <View style={styles.content}>
-                <Text style={styles.caption}>{post.caption}</Text>
+        <View style={styles.content}>
+        <SafeAreaView style={{flex:1}}>
+            
                 <View style={styles.footer}>
                     <Text style={styles.caption}>{post.caption}</Text>
                 </View>
-            </View>
+            
         </SafeAreaView>
-
+        </View>
     </View>
   )
 }
@@ -38,17 +39,16 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        //backgroundColor: `rgba(0,0,0,0.5)`
+        backgroundColor: `rgba(0,0,0,0.5)`,
+        padding: 10
     },
     footer:{
        marginTop: 'auto', 
     },
     caption: {
-        fontSize: 50,
         color: 'white',
-        zIndex: 1, 
-        position: 'absolute', 
-        left: 20, 
-
+        fontSize: 16,
+        fontFamily: 'Avenir'
+        
     }
 })

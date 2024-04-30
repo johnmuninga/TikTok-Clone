@@ -8,7 +8,7 @@ import FeedScreen from './components/feed';
 
 export default function App() {
   return (
-    <View style={{flex:1}}>
+    <View style={{flex: 1}}>
       <FeedScreen />
     </View>
   );
